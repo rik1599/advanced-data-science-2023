@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "nlp-examples"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "nlp_examples"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+nltk = "^3.8.1"
+matplotlib = "^3.7.1"
+pandas = "^2.0.1"
+scikit-learn = "^1.2.2"
+seaborn = "^0.12.2"
+gensim = "^4.3.1"
+networkx = "^3.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.22.0"
+notebook = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
