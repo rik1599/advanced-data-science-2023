@@ -8614,12 +8614,20 @@ Node 60: 0.4566192597483472
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">start_type</span><span class="p">,</span> <span class="n">end_type</span> <span class="ow">in</span> <span class="n">nx</span><span class="o">.</span><span class="n">node_attribute_xy</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'type'</span><span class="p">):</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_type</span><span class="p">)</span>
-    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_type</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Assortativity with respect to company type:'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">type_labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'type'</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">assortativity</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">type_labels</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">start_type</span><span class="p">,</span> <span class="n">end_type</span> <span class="ow">in</span> <span class="n">nx</span><span class="o">.</span><span class="n">node_attribute_xy</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'type'</span><span class="p">):</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_type</span> <span class="o">==</span> <span class="n">l</span><span class="p">)</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_type</span> <span class="o">==</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">assortativity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Binary assortativity with respect to </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> companies:'</span><span class="p">,</span> <span class="n">assortativity</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Assortativity with respect to company type:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">assortativity</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -8632,7 +8640,10 @@ Node 60: 0.4566192597483472
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Assortativity with respect to company type: 0.10383123998988467
+<pre>Binary assortativity with respect to content companies: 0.2630188679245285
+Binary assortativity with respect to infrastructure companies: 0.33823529411764736
+Binary assortativity with respect to commerce companies: 0.10879629629629634
+Assortativity with respect to company type: 0.23668348611282405
 </pre>
 </div>
 </div>
